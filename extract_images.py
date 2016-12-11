@@ -1,5 +1,8 @@
 #!/usr/bin/env python
-# Martin Kersner, 2016/12/08
+# -*- coding: utf-8 -*-
+
+# Martin Kersner, m.kersner@gmail.com
+# 2016/12/08
 
 import os
 import sys
