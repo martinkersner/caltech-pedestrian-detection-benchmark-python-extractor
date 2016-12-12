@@ -5,7 +5,6 @@
 # 2016/12/08
 
 # Modied version from https://github.com/mitmul/caltech-pedestrian-dataset-converter
-# TODO set output file
 
 import os
 import sys
@@ -13,6 +12,11 @@ import glob
 import json
 from scipy.io import loadmat
 from collections import defaultdict
+
+if len(sys.argv) != 3:
+    print "Usage:"
+    print "python extract_annotations.py path/to/directory/with/annotations output_file.json"
+    exit()
 
 all_obj = 0
 data = defaultdict(dict)
@@ -72,4 +76,4 @@ for dname in sorted(glob.glob(os.path.join(sys.argv[1], 'set*'))):
         all_obj += n_obj
 
 print('Number of objects:', all_obj)
-json.dump(data, open('annotations.json', 'w'))
+json.dump(data, open(sys.argv[2], 'w'))
