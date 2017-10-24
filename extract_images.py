@@ -7,7 +7,7 @@ def main():
     input_dir  = sys.argv[1]
     output_dir = sys.argv[2]
 
-    # walk through all all 'sets' of images
+    # walk through all 'sets' of images
     for x in os.walk(input_dir):
         extract(os.path.join(input_dir, x[0]), output_dir)
 
