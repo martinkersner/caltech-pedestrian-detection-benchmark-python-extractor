@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-# Martin Kersner, m.kersner@gmail.com
-# 2016/12/08
-
 import os
 import sys
 import glob
@@ -13,7 +7,9 @@ def main():
     input_dir  = sys.argv[1]
     output_dir = sys.argv[2]
 
-    extract(input_dir, output_dir)
+    # walk through all all 'sets' of images
+    for x in os.walk(input_dir):
+        extract(os.path.join(input_dir, x[0]), output_dir)
 
 def detect_format(image_format):
     if image_format == 100 or image_format == 200:
@@ -31,7 +27,7 @@ def detect_format(image_format):
         return None
 
 def write_img(path, img_name, img_data):
-    with open(img_name, "wb") as f:
+    with open(os.path.join(path,img_name), "wb") as f:
         f.write(bytearray(img_data))
 
 def create_dir(directory):
@@ -41,20 +37,19 @@ def create_dir(directory):
 def create_output_dir(input_dir, output_dir):
     create_dir(output_dir) 
 
-    #if input_dir[-1] == "/":
-    #    tmp = input_dir[0:-1]
-
-    #create_dir(os.path.join(output_dir, tmp.split("/")[0]))
-
 def extract(input_dir, output_dir):
     # test input dir -> stop
     # test output dir -> create
     SKIP = 28 + 8 + 512
 
+    print input_dir, "input directory \n \n \n"
+
     for filename in glob.glob(os.path.join(input_dir, "*.seq")):
         print filename
 
-        create_dir(os.path.join(output_dir, 
+        im_set = input_dir[-5:]
+
+        create_dir(os.path.join(output_dir, im_set))
 
         with open(filename, "rb") as f:
             f.seek(SKIP)
@@ -82,14 +77,9 @@ def extract(input_dir, output_dir):
 
                 img_data = f.read(img_size)
                 img_name = str(img_id) + ext
-                write_img(img_name, img_data)
+                write_img(os.path.join(output_dir,im_set), img_name, img_data)
 
                 f.seek(12, 1) # skip to next image
-
-                if img_id >= 10: # TODO delete
-                    break
-
-        break # TODO delete
 
 if __name__ == "__main__":
     main()
