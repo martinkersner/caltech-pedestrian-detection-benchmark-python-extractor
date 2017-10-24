@@ -1,3 +1,9 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# Martin Kersner, m.kersner@gmail.com
+# 2016/12/08
+
 import os
 import sys
 import glob
@@ -41,8 +47,6 @@ def extract(input_dir, output_dir):
     # test input dir -> stop
     # test output dir -> create
     SKIP = 28 + 8 + 512
-
-    print input_dir, "input directory \n \n \n"
 
     for filename in glob.glob(os.path.join(input_dir, "*.seq")):
         print filename
